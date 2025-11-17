@@ -93,7 +93,7 @@ async function cargarDesdeAPI() {
                 esp.vehiculo = {
                     tipo: v.tipo,
                     patente: v.patente,
-                    fechaIngreso: v.fechaIngreso  // ISO guardado
+                    fechaIngreso: v.fechaIngreso 
                 };
             }
         });
@@ -258,3 +258,11 @@ if (localStorage.getItem("tema") === "claro") {
     document.body.classList.add("claro");
     btnTema.textContent = "☀️";
 }
+
+function actualizarReloj() {
+    const r = document.getElementById("reloj");
+    r.textContent = new Date().toLocaleTimeString(); 
+}
+actualizarReloj();
+setInterval(actualizarReloj, 1000);
+
