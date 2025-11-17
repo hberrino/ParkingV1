@@ -1,0 +1,324 @@
+/* ----------------------------------------------------
+    RESET GENERAL
+---------------------------------------------------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Courier New", monospace;
+}
+
+body {
+    background: #000;
+    color: #00ffbf;
+    min-height: 100vh;
+    transition: 0.25s;
+}
+
+/* Tema claro */
+body.claro {
+    background: #f1f1f1;
+    color: #00665a;
+}
+
+/* ----------------------------------------------------
+    APP CONTAINER (mobile-first)
+---------------------------------------------------- */
+#appContainer {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+/* ----------------------------------------------------
+    TOPBAR
+---------------------------------------------------- */
+#topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 2px solid #00ffbf;
+}
+
+#tituloApp {
+    font-size: 1.8rem;
+    font-family: fantasy;
+    letter-spacing: 2px;
+}
+
+/* Botones del topbar */
+#accionesTopbar button {
+    margin-left: 10px;
+    font-size: 20px;
+    padding: 8px 12px;
+    border: 2px solid #00ffbf;
+    background: transparent;
+    color: #00ffbf;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+#accionesTopbar button:hover {
+    background: #00ffbf;
+    color: #000;
+}
+
+/* Tema claro botones */
+body.claro #accionesTopbar button {
+    border-color: #009688;
+    color: #009688;
+}
+body.claro #accionesTopbar button:hover {
+    background: #009688;
+    color: white;
+}
+
+/* ----------------------------------------------------
+    LAYOUT MOBILE-FIRST (columna)
+---------------------------------------------------- */
+#layout {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* ----------------------------------------------------
+    ZONA ESTACIONAMIENTO
+---------------------------------------------------- */
+#zonaEstacionamiento {
+    width: 100%;
+}
+
+#gridEstacionamiento {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 15px;
+    justify-items: center;
+}
+
+/* ----------------------------------------------------
+    ESPACIOS
+---------------------------------------------------- */
+.espacio {
+    width: 110px;
+    height: 70px;
+    border: 2px solid #00ffbf;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    transition: 0.25s ease;
+    font-size: 15px;
+    text-shadow: 0 0 5px #00ffbf;
+}
+
+.espacio:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px #00ffbf;
+}
+
+/* Estado libre */
+.espacio-libre {
+    background: rgba(0, 255, 191, 0.08);
+}
+
+/* Estado ocupado */
+.espacio-ocupado {
+    background: rgba(255, 40, 40, 0.15);
+    border-color: #ff4e4e;
+    color: #ff9292;
+    text-shadow: 0 0 5px #ff4e4e;
+}
+
+/* Tema claro */
+body.claro .espacio {
+    border-color: #009688;
+    text-shadow: none;
+}
+body.claro .espacio-libre {
+    background: #c9fff0;
+}
+body.claro .espacio-ocupado {
+    background: #ffd2d2;
+    border-color: #ff7373;
+}
+
+/* ----------------------------------------------------
+    PANEL DE RETIRO
+---------------------------------------------------- */
+#panelRetiro {
+    width: 100%;
+    padding: 20px;
+
+    border: 2px solid #00ffbf;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.35);
+    box-shadow: 0 0 12px #00ffbf;
+
+    height: auto;
+}
+
+#panelRetiro h2 {
+    margin-bottom: 15px;
+    font-weight: normal;
+    text-shadow: 0 0 8px #00ffbf;
+    border-left: 2px solid #00ffbf66;
+    padding-left: 25px;
+}
+
+#infoRetiro {
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+/* Tema claro */
+body.claro #panelRetiro {
+    background: white;
+    border-color: #009688;
+    box-shadow: none;
+}
+body.claro #panelRetiro h2 {
+    text-shadow: none;
+}
+
+/* ----------------------------------------------------
+    BOTONES GENERALES
+---------------------------------------------------- */
+button {
+    padding: 8px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 2px solid #00ffbf;
+    background: transparent;
+    color: #00ffbf;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+button:hover {
+    background: #00ffbf;
+    color: #000;
+}
+
+/* Tema claro */
+body.claro button {
+    border-color: #009688;
+    color: #009688;
+}
+body.claro button:hover {
+    background: #009688;
+    color: white;
+}
+
+/* ----------------------------------------------------
+    MODALES
+---------------------------------------------------- */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.25s ease;
+}
+
+/* MODAL OCULTO FIX (NO BLOQUEA CLICS) */
+.modal.oculto {
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* MODAL ACTIVO */
+.modal:not(.oculto) {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/* Contenido de modal */
+#modalContenido,
+#modalRegContenido {
+    width: 300px;
+    padding: 20px;
+    background: #00231d;
+    border: 2px solid #00ffbf;
+    border-radius: 12px;
+    box-shadow: 0 0 12px #00ffbf;
+    animation: aparecer 0.3s ease;
+}
+
+#modalContenido input,
+#modalRegContenido input,
+#modalRegContenido select {
+    width: 100%;
+    padding: 8px;
+    margin: 12px 0;
+    border: 2px solid #00ffbf;
+    border-radius: 8px;
+    background: #000;
+    color: #00ffbf;
+}
+
+.modalBotones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+/* Tema claro modal */
+body.claro #modalContenido,
+body.claro #modalRegContenido {
+    background: white;
+    border-color: #009688;
+}
+
+body.claro #modalContenido input,
+body.claro #modalRegContenido input,
+body.claro #modalRegContenido select {
+    background: #e8fffb;
+    border-color: #009688;
+    color: #00665a;
+}
+
+/* Animación modal */
+@keyframes aparecer {
+    from { transform: scale(0.85); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+/* ----------------------------------------------------
+    DESKTOP LAYOUT
+---------------------------------------------------- */
+@media (min-width: 768px) {
+
+    #appContainer {
+        max-width: 1200px;
+        margin-top: 20px;
+        padding: 25px;
+        border: 2px solid #00ffbf;
+        border-radius: 15px;
+        background: rgba(0,0,0,0.35);
+        box-shadow: 0 0 25px #00ffbf66;
+    }
+
+    #layout {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    #zonaEstacionamiento {
+        width: 60%;
+    }
+
+    #panelRetiro {
+        width: 35%;
+    }
+}
