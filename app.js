@@ -177,19 +177,15 @@ function mostrarPanelRetiro(espacio) {
 
     const ms = ahora - fechaIngreso;
 
-    // Tiempo desglosado
     const horas = Math.floor(ms / 3600000);
     const minutos = Math.floor((ms % 3600000) / 60000);
-
-    // Tarifa por hora
     const tarifa = espacio.vehiculo.tipo === "Moto"
         ? config.precioMoto
         : config.precioAuto;
 
-    // ----- NUEVO SISTEMA PROPORCIONAL -----
-    const totalMin = Math.floor(ms / 60000);     // minutos totales
-    const horasDec = totalMin / 60;              // horas expresadas en decimal
-    const total = Math.round(horasDec * tarifa); // total redondeado
+    const totalMin = Math.floor(ms / 60000);  
+    const horasDec = totalMin / 60;             
+    const total = Math.round(horasDec * tarifa);
 
     infoRetiro.innerHTML =
 `Patente: ${espacio.vehiculo.patente}
@@ -270,4 +266,3 @@ function actualizarReloj() {
 }
 actualizarReloj();
 setInterval(actualizarReloj, 1000);
-
