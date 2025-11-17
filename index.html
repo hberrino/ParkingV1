@@ -7,10 +7,7 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
     <div id="appContainer">
-
-        <!-- Barra superior -->
         <header id="topbar">
             <div id="tituloApp">Estacionamiento</div>
 
@@ -19,68 +16,47 @@
                 <button id="btnConfig">⚙️</button>
             </div>
         </header>
-
-        <!-- Layout mobile-first -->
         <div id="layout">
-
-            <!-- Zona Estacionamiento -->
             <div id="zonaEstacionamiento">
                 <div id="gridEstacionamiento"></div>
             </div>
-
-            <!-- Panel Retiro -->
             <aside id="panelRetiro">
                 <h2>Cálculo de Retiro</h2>
                 <div id="infoRetiro">
                     Seleccione un vehículo ocupado para ver los detalles.
                 </div>
             </aside>
-
-        </div> <!-- FIN layout -->
-
-    </div> <!-- FIN appContainer -->
-
-    <!-- Modal Configuración -->
+        </div> 
+    </div> 
     <div id="modalConfig" class="oculto modal">
         <div id="modalContenido">
             <h3>Configuración del Estacionamiento</h3>
-
             <label>Cantidad de espacios:</label>
             <input type="number" id="cfgEspacios" min="1" />
-
             <label>Precio Moto por hora:</label>
             <input type="number" id="cfgMoto" min="0" />
-
             <label>Precio Auto por hora:</label>
             <input type="number" id="cfgAuto" min="0" />
-
             <button id="guardarConfig">Guardar</button>
             <button id="cerrarConfig">Cerrar</button>
         </div>
     </div>
-
-    <!-- Modal Registrar Vehículo -->
     <div id="modalRegistro" class="oculto modal">
         <div id="modalRegContenido">
             <h3>Registrar Vehículo</h3>
-
             <label for="regTipo">Tipo:</label>
             <select id="regTipo">
                 <option value="Auto">Auto</option>
                 <option value="Moto">Moto</option>
             </select>
-
             <label for="regPatente">Patente:</label>
             <input type="text" id="regPatente" placeholder="ABC123 / AA123BB" />
-
             <div class="modalBotones">
                 <button id="btnRegistrarConfirmar">Registrar</button>
                 <button id="btnRegistrarCancelar">Cancelar</button>
             </div>
         </div>
     </div>
-
     <script src="app.js"></script>
-
 </body>
 </html>

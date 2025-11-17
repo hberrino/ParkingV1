@@ -1,7 +1,3 @@
-// ========================================================
-//  CONFIGURACIÓN GENERAL + LOCALSTORAGE
-// ========================================================
-
 const API_URL = "https://691b54b92d8d7855757278a4.mockapi.io/vehiculos";
 
 const grid = document.getElementById("gridEstacionamiento");
@@ -16,7 +12,7 @@ const cfgAuto = document.getElementById("cfgAuto");
 const guardarConfig = document.getElementById("guardarConfig");
 const cerrarConfig = document.getElementById("cerrarConfig");
 
-// ===== Modal Registro =====
+
 const modalRegistro = document.getElementById("modalRegistro");
 const regTipo = document.getElementById("regTipo");
 const regPatente = document.getElementById("regPatente");
@@ -25,7 +21,6 @@ const btnRegistrarCancelar = document.getElementById("btnRegistrarCancelar");
 
 let espacioSeleccionado = null;
 
-// ===== Configuración desde localStorage =====
 let config = {
     espacios: parseInt(localStorage.getItem("espacios")) || 20,
     precioMoto: parseInt(localStorage.getItem("precioMoto")) || 300,
@@ -37,16 +32,11 @@ cfgMoto.value = config.precioMoto;
 cfgAuto.value = config.precioAuto;
 
 
-// ========================================================
-//  CLASES
-// ========================================================
-
 class Vehiculo {
     constructor(tipo, patente) {
         this.tipo = tipo;
         this.patente = patente;
 
-        // *** FECHA EN FORMATO ISO ***
         this.fechaIngreso = new Date().toISOString();
     }
 }
@@ -86,18 +76,8 @@ class Estacionamiento {
     }
 }
 
-
-// ========================================================
-//  INICIALIZAR SISTEMA
-// ========================================================
-
 let est = new Estacionamiento(config.espacios);
 cargarDesdeAPI();
-
-
-// ========================================================
-//  CARGAR DESDE API
-// ========================================================
 
 async function cargarDesdeAPI() {
     try {
@@ -125,11 +105,6 @@ async function cargarDesdeAPI() {
     }
 }
 
-
-// ========================================================
-//  GENERAR GRILLA
-// ========================================================
-
 function generarEspacios() {
     grid.innerHTML = "";
 
@@ -154,11 +129,6 @@ function generarEspacios() {
     });
 }
 
-
-// ========================================================
-//  MODAL REGISTRO
-// ========================================================
-
 function abrirModalRegistro(esp) {
     espacioSeleccionado = esp;
     regPatente.value = "";
@@ -179,7 +149,6 @@ btnRegistrarConfirmar.addEventListener("click", async () => {
         return;
     }
 
-    // *** FECHA ISO PARA API ***
     const fechaISO = new Date().toISOString();
 
     await fetch(API_URL, {
@@ -196,11 +165,6 @@ btnRegistrarConfirmar.addEventListener("click", async () => {
     modalRegistro.classList.add("oculto");
     cargarDesdeAPI();
 });
-
-
-// ========================================================
-//  PANEL LATERAL (CÁLCULO)
-// ========================================================
 
 function mostrarPanelRetiro(espacio) {
     if (espacio.libre) {
@@ -239,11 +203,6 @@ TOTAL A COBRAR: $${total}
         .addEventListener("click", () => confirmarRetiro(espacio));
 }
 
-
-// ========================================================
-//  CONFIRMAR RETIRO
-// ========================================================
-
 async function confirmarRetiro(espacio) {
 
     const patente = espacio.vehiculo.patente;
@@ -260,11 +219,6 @@ async function confirmarRetiro(espacio) {
 
     infoRetiro.innerHTML = "Vehículo retirado con éxito.";
 }
-
-
-// ========================================================
-//  CONFIGURACIÓN DEL SISTEMA
-// ========================================================
 
 btnConfig.addEventListener("click", () => {
     modalConfig.classList.remove("oculto");
@@ -288,11 +242,6 @@ guardarConfig.addEventListener("click", () => {
     cargarDesdeAPI();
 });
 
-
-// ========================================================
-//  TEMA CLARO/OSCURO
-// ========================================================
-
 btnTema.addEventListener("click", () => {
     document.body.classList.toggle("claro");
 
@@ -305,7 +254,6 @@ btnTema.addEventListener("click", () => {
     );
 });
 
-// Restaurar tema guardado
 if (localStorage.getItem("tema") === "claro") {
     document.body.classList.add("claro");
     btnTema.textContent = "☀️";
