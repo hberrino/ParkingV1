@@ -1,25 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Courier New", monospace;
+    font-family: "JetBrains Mono", monospace;
 }
+
 body {
     background: #000;
     color: #00ffbf;
     min-height: 100vh;
     transition: 0.25s;
 }
+
 body.claro {
-    background: #f1f1f1;
-    color: #00665a;
+    background: #fcfcfc;
+    color: #006f5d;
 }
+
 #appContainer {
     width: 100%;
     max-width: 100%;
     padding: 10px;
     margin: 0 auto;
 }
+
 #topbar {
     display: flex;
     flex-direction: column;
@@ -28,13 +33,35 @@ body.claro {
     padding: 15px 20px;
     border-bottom: 2px solid #00ffbf;
 }
+
 #tituloApp {
     font-size: 1.8rem;
     font-family: fantasy;
     letter-spacing: 2px;
 }
-#accionesTopbar button {
-    margin-left: 10px;
+
+#grupoDerecha {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+#reloj {
+    font-size: 0.9rem;
+    margin-top: 0.7rem;
+    letter-spacing: 3px;
+    color: #00ffbf;
+    opacity: 0.85;
+    text-align: right;
+}
+
+body.claro #reloj {
+    color: #00ffd0;
+}
+
+.iconBtn {
     font-size: 20px;
     padding: 8px 12px;
     border: 2px solid #00ffbf;
@@ -44,43 +71,48 @@ body.claro {
     cursor: pointer;
     transition: 0.25s;
 }
-#accionesTopbar button:hover {
+
+.iconBtn:hover {
     background: #00ffbf;
     color: #000;
 }
-body.claro #accionesTopbar button {
-    border-color: #009688;
-    color: #009688;
+
+body.claro .iconBtn {
+    border-color: #00c7a3;
+    color: #00c7a3;
 }
-body.claro #accionesTopbar button:hover {
-    background: #009688;
+
+body.claro .iconBtn:hover {
+    background: #00c7a3;
     color: white;
 }
+
 #layout {
     display: flex;
     flex-direction: column;
     gap: 25px;
     margin-top: 20px;
 }
+
 #zonaEstacionamiento {
     width: 100%;
 }
+
 #gridEstacionamiento {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 15px;
     justify-items: center;
 }
+
 .espacio {
     width: 110px;
     height: 70px;
     border: 2px solid #00ffbf;
     border-radius: 10px;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     cursor: pointer;
     transition: 0.25s ease;
     font-size: 15px;
@@ -91,37 +123,43 @@ body.claro #accionesTopbar button:hover {
     transform: scale(1.08);
     box-shadow: 0 0 12px #00ffbf;
 }
+
 .espacio-libre {
     background: rgba(0, 255, 191, 0.08);
 }
+
 .espacio-ocupado {
-    background: rgba(255, 40, 40, 0.15);
+    background: rgba(255, 40, 40, 0.18);
     border-color: #ff4e4e;
     color: #ff9292;
     text-shadow: 0 0 5px #ff4e4e;
 }
+
 body.claro .espacio {
-    border-color: #009688;
+    border-color: #00c7a3;
     text-shadow: none;
 }
+
 body.claro .espacio-libre {
-    background: #c9fff0;
+    background: #d2faed;
 }
+
 body.claro .espacio-ocupado {
-    background: #ffd2d2;
-    border-color: #ff7373;
+    background: #ffd9d9;
+    border-color: #ff5f5f;
+    color: #c73333;
 }
+
 #panelRetiro {
     width: 100%;
     padding: 20px;
-
     border: 2px solid #00ffbf;
     border-radius: 12px;
     background: rgba(0,0,0,0.35);
     box-shadow: 0 0 12px #00ffbf;
-
     height: auto;
 }
+
 #panelRetiro h2 {
     margin-bottom: 15px;
     font-weight: normal;
@@ -129,18 +167,24 @@ body.claro .espacio-ocupado {
     border-left: 2px solid #00ffbf66;
     padding-left: 25px;
 }
+
 #infoRetiro {
     line-height: 1.6;
     white-space: pre-line;
 }
+
 body.claro #panelRetiro {
-    background: white;
-    border-color: #009688;
-    box-shadow: none;
+    background: #fff;
+    border-color: #00c7a3;
+    box-shadow: 0 0 10px #00c7a355;
 }
+
 body.claro #panelRetiro h2 {
+    color: #006f5d;
     text-shadow: none;
+    border-left-color: #00c7a355;
 }
+
 button {
     padding: 8px 15px;
     border-radius: 8px;
@@ -158,13 +202,15 @@ button:hover {
 }
 
 body.claro button {
-    border-color: #009688;
-    color: #009688;
+    border-color: #00c7a3;
+    color: #007963;
 }
+
 body.claro button:hover {
-    background: #009688;
+    background: #00c7a3;
     color: white;
 }
+
 .modal {
     position: fixed;
     inset: 0;
@@ -174,14 +220,17 @@ body.claro button:hover {
     align-items: center;
     transition: 0.25s ease;
 }
+
 .modal.oculto {
     pointer-events: none;
     opacity: 0;
 }
+
 .modal:not(.oculto) {
     pointer-events: auto;
     opacity: 1;
 }
+
 #modalContenido,
 #modalRegContenido {
     width: 300px;
@@ -190,8 +239,8 @@ body.claro button:hover {
     border: 2px solid #00ffbf;
     border-radius: 12px;
     box-shadow: 0 0 12px #00ffbf;
-    animation: aparecer 0.3s ease;
 }
+
 #modalContenido input,
 #modalRegContenido input,
 #modalRegContenido select {
@@ -203,44 +252,89 @@ body.claro button:hover {
     background: #000;
     color: #00ffbf;
 }
+
 .modalBotones {
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
 }
+
 body.claro #modalContenido,
 body.claro #modalRegContenido {
-    background: white;
-    border-color: #009688;
+    background: #fff;
+    border-color: #00c7a3;
 }
+
 body.claro #modalContenido input,
 body.claro #modalRegContenido input,
 body.claro #modalRegContenido select {
-    background: #e8fffb;
-    border-color: #009688;
-    color: #00665a;
+    background: #f0fffa;
+    border-color: #00c7a3;
+    color: #005d4d;
 }
-@keyframes aparecer {
-    from { transform: scale(0.85); opacity: 0; }
-    to   { transform: scale(1); opacity: 1; }
-}
-#grupoDerecha {
+#footer {
     width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 15px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
-#reloj {
-    font-size: 0.9rem;
-    margin-top: 0.7rem;
-    letter-spacing: 3px;
+
+#footerNeon {
+    font-family: "Courier New", monospace;
+    font-size: 1rem;
     color: #00ffbf;
-    opacity: 0.8;
-    text-align: right;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-shadow: 0 0 6px #00ffbf;
+    transition: 0.25s ease;
 }
-body.claro #reloj {
-    color: #6dfff3;
+#footerNeon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #00ffbf;
+    filter: drop-shadow(0 0 6px #00ffbf);
+}
+#footerNeon:hover {
+    transform: scale(1.09);
+    text-shadow: 0 0 12px #00ffbf;
+}
+#footerNeon:hover svg {
+    filter: drop-shadow(0 0 12px #00ffbf);
+}
+body.claro #footerNeon {
+    color: #00897b;
+    text-shadow: none;
+}
+body.claro #footerNeon svg {
+    stroke: #00897b;
+    filter: none;
+}
+body.claro #footerNeon:hover {
+    color: #00b89a;
+}
+body.claro #footerNeon:hover svg {
+    stroke: #00b89a;
+}
+#footerNeon::after {
+    content: "_";
+    margin-left: 2px;
+    animation: blink 0.9s infinite steps(2);
+    color: inherit;
+    text-shadow: inherit;
+}
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+body.claro #footerNeon::after {
+    color: #00b89a;
+    text-shadow: none;
+}
+html, body {
+    overflow-x: hidden;
 }
 @media (min-width: 768px) {
     #appContainer {
@@ -252,17 +346,21 @@ body.claro #reloj {
         background: rgba(0,0,0,0.35);
         box-shadow: 0 0 25px #00ffbf66;
     }
+
     #layout {
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
     }
+
     #zonaEstacionamiento {
         width: 60%;
     }
+
     #panelRetiro {
         width: 35%;
     }
+
     #topbar {
         flex-direction: row;
         justify-content: space-between;
@@ -273,7 +371,6 @@ body.claro #reloj {
     }
     #reloj {
         margin-top: 0.7rem;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
-    
 }

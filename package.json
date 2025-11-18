@@ -1,0 +1,24 @@
+{
+  "name": "estacionamiento",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hberrino/ParkingV1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hberrino/ParkingV1/issues"
+  },
+  "homepage": "https://github.com/hberrino/ParkingV1#readme",
+  "dependencies": {
+    "sweet-alert": "^2.0.5",
+    "sweetalert2": "^11.26.3"
+  }
+}

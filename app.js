@@ -2,7 +2,6 @@ const API_URL = "https://691b54b92d8d7855757278a4.mockapi.io/vehiculos";
 
 const grid = document.getElementById("gridEstacionamiento");
 const infoRetiro = document.getElementById("infoRetiro");
-
 const btnTema = document.getElementById("btnTema");
 const btnConfig = document.getElementById("btnConfig");
 const modalConfig = document.getElementById("modalConfig");
@@ -11,8 +10,6 @@ const cfgMoto = document.getElementById("cfgMoto");
 const cfgAuto = document.getElementById("cfgAuto");
 const guardarConfig = document.getElementById("guardarConfig");
 const cerrarConfig = document.getElementById("cerrarConfig");
-
-
 const modalRegistro = document.getElementById("modalRegistro");
 const regTipo = document.getElementById("regTipo");
 const regPatente = document.getElementById("regPatente");
@@ -31,12 +28,10 @@ cfgEspacios.value = config.espacios;
 cfgMoto.value = config.precioMoto;
 cfgAuto.value = config.precioAuto;
 
-
 class Vehiculo {
     constructor(tipo, patente) {
         this.tipo = tipo;
         this.patente = patente;
-
         this.fechaIngreso = new Date().toISOString();
     }
 }
@@ -45,13 +40,8 @@ class Estacionamiento {
     constructor(capacidad) {
         this.capacidad = capacidad;
         this.espacios = [];
-
         for (let i = 1; i <= capacidad; i++) {
-            this.espacios.push({
-                id: i,
-                libre: true,
-                vehiculo: null
-            });
+            this.espacios.push({ id: i, libre: true, vehiculo: null });
         }
     }
 
@@ -80,38 +70,30 @@ let est = new Estacionamiento(config.espacios);
 cargarDesdeAPI();
 
 async function cargarDesdeAPI() {
-    try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    est = new Estacionamiento(config.espacios);
 
-        est = new Estacionamiento(config.espacios);
+    data.forEach(v => {
+        if (v.espacioId <= config.espacios) {
+            const esp = est.espacios[v.espacioId - 1];
+            esp.libre = false;
+            esp.vehiculo = {
+                tipo: v.tipo,
+                patente: v.patente,
+                fechaIngreso: v.fechaIngreso
+            };
+        }
+    });
 
-        data.forEach(v => {
-            if (v.espacioId <= config.espacios) {
-                const esp = est.espacios[v.espacioId - 1];
-                esp.libre = false;
-                esp.vehiculo = {
-                    tipo: v.tipo,
-                    patente: v.patente,
-                    fechaIngreso: v.fechaIngreso 
-                };
-            }
-        });
-
-        generarEspacios();
-
-    } catch (e) {
-        console.error("Error API:", e);
-    }
+    generarEspacios();
 }
 
 function generarEspacios() {
     grid.innerHTML = "";
-
     est.espacios.forEach(esp => {
         const div = document.createElement("div");
         div.classList.add("espacio");
-
         if (esp.libre) {
             div.classList.add("espacio-libre");
             div.textContent = "LIBRE";
@@ -119,12 +101,10 @@ function generarEspacios() {
             div.classList.add("espacio-ocupado");
             div.textContent = esp.vehiculo.patente;
         }
-
         div.addEventListener("click", () => {
             if (esp.libre) abrirModalRegistro(esp);
             else mostrarPanelRetiro(esp);
         });
-
         grid.appendChild(div);
     });
 }
@@ -144,8 +124,15 @@ btnRegistrarConfirmar.addEventListener("click", async () => {
     const tipo = regTipo.value;
     const patente = regPatente.value.trim().toUpperCase();
 
-    if (patente.length < 5) {
-        alert("Patente inválida");
+    if (!/^[A-Za-z0-9]{5,8}$/.test(patente)) {
+        Swal.fire({
+            icon: "error",
+            title: "Patente inválida",
+            text: "Solo letras y números (5 a 8 caracteres).",
+            confirmButtonColor: "#ff4e4e",
+            background: "#2b0000",
+            color: "#ffbebe"
+        });
         return;
     }
 
@@ -164,27 +151,29 @@ btnRegistrarConfirmar.addEventListener("click", async () => {
 
     modalRegistro.classList.add("oculto");
     cargarDesdeAPI();
+
+    Swal.fire({
+        icon: "success",
+        title: "Vehículo registrado",
+        text: "Ingreso guardado correctamente.",
+        confirmButtonColor: "#00ffbf",
+        background: "#001d17",
+        color: "#00ffbf"
+    });
 });
 
 function mostrarPanelRetiro(espacio) {
-    if (espacio.libre) {
-        infoRetiro.innerHTML = "Seleccione un vehículo ocupado para ver los detalles.";
-        return;
-    }
-
     const fechaIngreso = new Date(espacio.vehiculo.fechaIngreso);
     const ahora = new Date();
-
     const ms = ahora - fechaIngreso;
 
     const horas = Math.floor(ms / 3600000);
     const minutos = Math.floor((ms % 3600000) / 60000);
-    const tarifa = espacio.vehiculo.tipo === "Moto"
-        ? config.precioMoto
-        : config.precioAuto;
 
-    const totalMin = Math.floor(ms / 60000);  
-    const horasDec = totalMin / 60;             
+    const totalMin = Math.floor(ms / 60000);
+    const horasDec = totalMin / 60;
+
+    const tarifa = espacio.vehiculo.tipo === "Moto" ? config.precioMoto : config.precioAuto;
     const total = Math.round(horasDec * tarifa);
 
     infoRetiro.innerHTML =
@@ -205,7 +194,6 @@ TOTAL A COBRAR: $${total}
 }
 
 async function confirmarRetiro(espacio) {
-
     const patente = espacio.vehiculo.patente;
 
     const res = await fetch(`${API_URL}?patente=${patente}`);
@@ -218,7 +206,14 @@ async function confirmarRetiro(espacio) {
     est.retirar(espacio.id);
     cargarDesdeAPI();
 
-    infoRetiro.innerHTML = "Vehículo retirado con éxito.";
+    Swal.fire({
+        icon: "success",
+        title: "Retiro completado",
+        text: "El vehículo fue retirado con éxito.",
+        confirmButtonColor: "#00ffbf",
+        background: "#001d17",
+        color: "#00ffbf"
+    });
 }
 
 btnConfig.addEventListener("click", () => {
@@ -239,30 +234,31 @@ guardarConfig.addEventListener("click", () => {
     localStorage.setItem("precioAuto", config.precioAuto);
 
     modalConfig.classList.add("oculto");
-
     cargarDesdeAPI();
 });
 
 btnTema.addEventListener("click", () => {
     document.body.classList.toggle("claro");
 
-    btnTema.textContent =
-        document.body.classList.contains("claro") ? "☀️" : "🌙";
+    const nuevoTema = document.body.classList.contains("claro") ? "claro" : "oscuro";
+    localStorage.setItem("tema", nuevoTema);
 
-    localStorage.setItem(
-        "tema",
-        document.body.classList.contains("claro") ? "claro" : "oscuro"
-    );
+    btnTema.innerHTML = `<i data-feather="${nuevoTema === "claro" ? "sun" : "moon"}"></i>`;
+    feather.replace();
 });
 
 if (localStorage.getItem("tema") === "claro") {
     document.body.classList.add("claro");
-    btnTema.textContent = "☀️";
+    btnTema.innerHTML = `<i data-feather="sun"></i>`;
+} else {
+    btnTema.innerHTML = `<i data-feather="moon"></i>`;
 }
 
+feather.replace();
+
 function actualizarReloj() {
-    const r = document.getElementById("reloj");
-    r.textContent = new Date().toLocaleTimeString(); 
+    document.getElementById("reloj").textContent = new Date().toLocaleTimeString();
 }
+
 actualizarReloj();
 setInterval(actualizarReloj, 1000);
